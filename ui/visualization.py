@@ -227,31 +227,48 @@ class VisualizationApp:
     def _create_algo_buttons(self):
         buttons = []
         y_offset = 0
-        max_buttons_per_col = 10
-        current_col_x = ALGO_BUTTON_X
-        col_width_offset = ALGO_BUTTON_WIDTH + 15
+        max_buttons_per_col = 10 # Giữ nguyên từ code gốc của bạn
+        # Điều chỉnh current_col_x và col_width_offset nếu bạn có nhiều hơn 2 cột
+        # current_col_x = ALGO_BUTTON_X 
+        # col_width_offset = ALGO_BUTTON_WIDTH + 15
+
+        # Tính toán cho nhiều cột (ví dụ 2 cột nếu số lượng button > max_buttons_per_col)
+        num_algo_buttons = len(ALGORITHMS_TO_DISPLAY)
+        num_cols = (num_algo_buttons + max_buttons_per_col -1) // max_buttons_per_col
+
+        # Tính toán X bắt đầu cho cột đầu tiên để căn giữa cụm button nếu có nhiều cột
+        total_button_block_width = num_cols * ALGO_BUTTON_WIDTH + max(0, num_cols - 1) * 15 # 15 là khoảng cách giữa các cột
+        # BUTTON_COLUMN_START_X_ANCHOR = RIGHT_PANEL_START_X + (RIGHT_PANEL_WIDTH - total_button_block_width) // 2
+        
+        # Sử dụng ALGO_BUTTON_X như cũ nếu bạn chỉ muốn căn giữa một cột đơn
+        current_col_x_start = ALGO_BUTTON_X 
+
+
+        col_idx = 0
+        current_col_x = current_col_x_start
 
         for i, algo_name_display in enumerate(ALGORITHMS_TO_DISPLAY):
             if i > 0 and i % max_buttons_per_col == 0:
                 y_offset = 0
-                current_col_x += col_width_offset
+                col_idx +=1
+                current_col_x = current_col_x_start + col_idx * (ALGO_BUTTON_WIDTH + 15)
+
 
             btn_y = BUTTON_COLUMN_START_Y + y_offset * (ALGO_BUTTON_HEIGHT + BUTTON_GAP_Y)
-            is_belief = (algo_name_display == "Conformant BFS")
-            is_rl = algo_name_display in ["Q-Learning", "TD (SARSA)"]
-            is_other_special = algo_name_display in ["AC-3 Solver", "AND-OR Search"]
+            
+            # Không cần gán button_color nữa nếu không dùng cho nền
+            # is_belief = (algo_name_display == "Conformant BFS")
+            # is_rl = algo_name_display in ["Q-Learning", "TD (SARSA)"]
+            # is_other_special = algo_name_display in ["AC-3 Solver", "AND-OR Search"]
 
-            button_color = COLOR_BUTTON
-            if is_belief:
-                button_color = COLOR_BUTTON_BELIEF
-            elif is_rl:
-                button_color = pg.Color("#FFC107")
-            elif is_other_special:
-                button_color = pg.Color("#607D8B")
+            # button_color = COLOR_BUTTON # Mặc định
+            # if is_belief: button_color = COLOR_BUTTON_BELIEF
+            # elif is_rl: button_color = pg.Color("#FFC107")
+            # elif is_other_special: button_color = pg.Color("#607D8B")
 
             button = Button(current_col_x, btn_y, ALGO_BUTTON_WIDTH, ALGO_BUTTON_HEIGHT, algo_name_display,
-                            callback=self.handle_algo_button_click,
-                            base_color=button_color)
+                            callback=self.handle_algo_button_click)
+                            # Loại bỏ: base_color=button_color
             buttons.append(button)
             y_offset += 1
         return buttons
@@ -259,14 +276,14 @@ class VisualizationApp:
     def _create_nav_buttons(self):
         buttons = {
             "prev": Button(POS_PREV_X, NAV_BUTTON_Y, NAV_BUTTON_WIDTH, NAV_BUTTON_HEIGHT, "Lùi",
-                           callback=self.nav_button_click,
-                           base_color=COLOR_NAV_BUTTON, hover_color=COLOR_NAV_BUTTON_HOVER),
+                           callback=self.nav_button_click),
+                           # Loại bỏ: base_color=COLOR_NAV_BUTTON, hover_color=COLOR_NAV_BUTTON_HOVER
             "next": Button(POS_NEXT_X, NAV_BUTTON_Y, NAV_BUTTON_WIDTH, NAV_BUTTON_HEIGHT, "Tiến",
-                           callback=self.nav_button_click,
-                           base_color=COLOR_NAV_BUTTON, hover_color=COLOR_NAV_BUTTON_HOVER)
+                           callback=self.nav_button_click)
+                           # Loại bỏ: base_color=COLOR_NAV_BUTTON, hover_color=COLOR_NAV_BUTTON_HOVER
         }
         return buttons
-
+    
     def _update_nav_button_state(self):
         can_navigate_path = self.path_found and self.found_path_type == 'states' and isinstance(self.path,
                                                                                                 list) and len(
@@ -550,15 +567,16 @@ class VisualizationApp:
                      border_radius=frame_border_radius)
         pg.draw.rect(self.screen, COLOR_BORDER, FRAME_CENTER_RECT, frame_border_thickness,
                      border_radius=frame_border_radius)
-        pg.draw.rect(self.screen, COLOR_BORDER, FRAME_RIGHT_RECT, frame_border_thickness,
-                     border_radius=frame_border_radius)
+        # pg.draw.rect(self.screen, COLOR_BORDER, FRAME_RIGHT_RECT, frame_border_thickness,
+        #              border_radius=frame_border_radius)
 
         can_navigate_path = self.path_found and self.found_path_type == 'states' and isinstance(self.path,
                                                                                                 list) and len(
             self.path) > 1
         if can_navigate_path:
-            pg.draw.rect(self.screen, COLOR_BORDER, FRAME_NAV_RECT, frame_border_thickness,
-                         border_radius=frame_border_radius)
+            # pg.draw.rect(self.screen, COLOR_BORDER, FRAME_NAV_RECT, frame_border_thickness,
+            #              border_radius=frame_border_radius)
+            pass
 
     def _draw_static_elements(self):
         draw_text("8 PUZZLE SOLVER VISUALIZATION", FONT_LARGE, COLOR_TEXT_PRIMARY, self.screen,
