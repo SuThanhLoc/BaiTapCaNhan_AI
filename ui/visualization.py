@@ -17,15 +17,9 @@ from .drawing import draw_text, find_zero_pos, grid_to_pixel_large, lerp, draw_8
 
 # --- Import Logic Puzzle ---
 from puzzle.state import Start, Goal # Import trạng thái mặc định
-# (Không cần import các hàm state khác nếu dùng PuzzleState class sau này)
-# Tạm thời import các hàm cần thiết trực tiếp
 from puzzle.state import Tim_0, Check, DiChuyen, change_matran_string, print_matrix
-# Import các hàm heuristic
-from puzzle.heuristics import khoang_cach_mahathan, Chiphi
 
 # --- Import các Thuật toán ---
-# Import từng hàm thuật toán từ module tương ứng
-# (LƯU Ý: Đảm bảo bạn đã tạo và di chuyển code vào các file này)
 try:
     from algorithms.bfs import bfs_search
     from algorithms.dfs import dfs_search # Đổi tên hàm nếu cần
