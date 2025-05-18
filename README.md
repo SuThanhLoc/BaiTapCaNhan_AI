@@ -4,7 +4,7 @@
 
 * Mô tả mục tiêu của dự án này. Ví dụ:
     * Nghiên cứu và triển khai các thuật toán tìm kiếm khác nhau để giải bài toán 8-puzzle.
-    * Phân tích, so sánh hiệu suất (thời gian, số bước, bộ nhớ sử dụng) của các thuật toán.
+    * Phân tích, so sánh hiệu suất (thời gian, số bước) của các thuật toán.
     * Xây dựng một giao diện người dùng trực quan để minh họa quá trình giải và tương tác với các thuật toán.
 
 ## 2. NỘI DUNG
@@ -14,11 +14,11 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 * **Không gian trạng thái (State Space):** Tập hợp tất cả các trạng thái có thể có của các ô số trên bảng 3x3.
 * **Trạng thái ban đầu (Initial State):** Trạng thái bắt đầu của bài toán.
 * **Trạng thái đích (Goal State):** Là trạng thái mà thuật toán cần đạt tới (các số được sắp xếp theo thứ tự từ 1 đến 8, với ô trống ở vị trí cuối cùng).
-* **Hành động (Actions):** Các phép toán cho phép chuyển từ trạng thái này sang trạng thái khác. Trong bài toán 8-puzzle, hành động là di chuyển ô trống lên, xuống, trái, hoặc phải (nếu có thể).
+* **Hành động (Actions):** Hành động là di chuyển ô trống lên, xuống, trái, hoặc phải.
 * **Hàm chuyển đổi (Transition Model):** Mô tả trạng thái kết quả khi thực hiện một hành động từ một trạng thái nhất định.
-* **Chi phí đường đi (Path Cost):** Thường là số bước di chuyển để đạt được trạng thái đích. Trong một số thuật toán (như Uniform Cost Search), mỗi bước có thể có chi phí khác nhau, nhưng trong bài toán 8-puzzle cơ bản, mỗi bước thường có chi phí là 1.
+* **Chi phí đường đi (Path Cost):** Là số bước di chuyển để đạt được trạng thái đích. mỗi bước có chi phí là 1.
 
-**Solution (Lời giải):** Là một chuỗi các hành động (hoặc một dãy các trạng thái) dẫn từ trạng thái ban đầu đến trạng thái đích. Một lời giải tối ưu là lời giải có chi phí đường đi nhỏ nhất.
+**Solution (Lời giải):** Là một chuỗi các hành động dẫn từ trạng thái đầu đến trạng thái đích. Một lời giải tối ưu là lời giải có chi phí đường đi nhỏ nhất.
 
 ---
 
@@ -167,9 +167,9 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
     * Nhược điểm: Chi phí kiểm tra phía trước có thể đáng kể.
 
 #### c. AC-3
-* **Mô tả ngắn gọn:** Một thuật toán tiền xử lý (hoặc dùng trong quá trình tìm kiếm) để loại bỏ các giá trị không nhất quán khỏi miền của các biến trong một CSP. Đảm bảo rằng với mỗi giá trị của một biến, tồn tại ít nhất một giá trị tương thích cho mỗi biến khác có ràng buộc với nó.
+* **Mô tả ngắn gọn:** Một thuật toán dùng trong quá trình tìm kiếm để loại bỏ các giá trị không nhất quán khỏi miền của các biến trong một CSP. Đảm bảo rằng với mỗi giá trị của một biến, tồn tại ít nhất một giá trị tương thích cho mỗi biến khác có ràng buộc với nó.
 * **Nhận xét hiệu suất:**
-    * AC-3 không phải là thuật toán tìm đường đi cho 8-puzzle. Trong project này, bạn đã sử dụng nó để tạo ra các trạng thái puzzle hợp lệ và có thể giải được. Điều này đảm bảo rằng các thuật toán tìm kiếm khác có một bài toán có ý nghĩa để giải.
+    * AC-3 không phải là thuật toán tìm đường đi cho 8-puzzle. Trong ứng dụng của em, em sử dụng nó để tạo ra các trạng thái puzzle hợp lệ và có thể giải được. Điều này đảm bảo rằng các thuật toán tìm kiếm khác có một bài toán có ý nghĩa để giải.
 
 ---
 
@@ -192,16 +192,18 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 
 ### Một vài nhận xét chung về hiệu suất các nhóm thuật toán
 
-* **Tìm kiếm không có thông tin:** Đảm bảo tính hoàn chỉnh và tối ưu (BFS, IDDFS, UCS) nhưng thường chậm và tốn bộ nhớ cho các bài toán phức tạp. DFS nhanh hơn về bộ nhớ nhưng không tối ưu.
-* **Tìm kiếm có thông tin:** Hiệu quả hơn nhiều nếu có heuristic tốt (A*, IDA*). Greedy nhanh nhưng không đảm bảo tối ưu.
+* **Tìm kiếm không có thông tin:** Đảm bảo tính hoàn chỉnh và tối ưu (BFS, IDDFS, UCS) nhưng thường chậm và tốn bộ nhớ cho các bài toán phức tạp.
+* **Tìm kiếm có thông tin:** Hiệu quả hơn nhiều vì có hàm đánh giá tốt (A*, IDA*).Greedy nhanh nhưng không đảm bảo tối ưu.
 * **Tìm kiếm cục bộ:** Nhanh và ít tốn bộ nhớ, nhưng dễ bị mắc kẹt ở cực tiểu địa phương và không đảm bảo tìm ra lời giải (trừ Simulated Annealing và Genetic Algorithm có cơ chế thoát).
 * **Tìm kiếm với ràng buộc:** Backtracking và Forward Checking là các kỹ thuật tổng quát cho CSPs, có thể áp dụng nhưng cần điều chỉnh cho bài toán tìm đường đi.
-* **Học máy (Q-Learning):** Một cách tiếp cận khác, học từ kinh nghiệm, có thể mạnh mẽ nhưng đòi hỏi quá trình huấn luyện.
+* **Học máy (Q-Learning):** Tiếp cận bằng cách học từ kinh nghiệm, có thể mạnh mẽ nhưng đòi hỏi quá trình huấn luyện, học tập dài.
 
 ## 3. KẾT LUẬN
     * Đã triển khai thành công những thuật toán tìm kiếm khác nhau cho bài toán 8-puzzle.
     * Xây dựng được giao diện người dùng cho phép người dùng tương tác và quan sát quá trình giải.
-    * Phân tích và so sánh cho thấy thuật toán một số thuật toán có vẻ hiệu quả nhất trong việc giải 8-puzzle.
+    * Phân tích và so sánh cho thấy thuật toán một số thuật toán có vẻ hiệu quả hơn các thuật toán còn lại trong việc giải 8-puzzle.
+    * Hiểu xâu hơn về những thuật toán đã được cô giảng dạy.
+    * Học được cách làm việc với AI (có sử dụng một số AI để hỗ trợ, tham khảo để giải quyết bài toán (Gemini, ChatGPT).
     * Rút ra những bài học từ những lần vấp ngã (thuật toán chạy không như ý muốn).
 
 ## 4. HƯỚNG DẪN THỰC THI
@@ -209,13 +211,13 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 Để chạy chương trình và trải nghiệm trò chơi:
 
 1.  **Cách sử dụng giao diện:**
-    * Vào File "UI.py" để khởi chạy từ IDE mà bạn sử dụng.
+    * Vào File "UI.py" để khởi chạy.
     * Các nút bấm chính: "NGẪU NHIÊN", "NHẬP TAY", "GIẢI", "XEM KẾT QUẢ", "LÙI", "RESET", "TIẾN".
     * chọn thuật toán từ danh sách mà bạn muốn.
     * Nhấn nút "CHẠY" để khởi chạy thuật toán.
-    * sau khi thuật toán đã chạy xong.
-    * Nhấn nút "RESET" để có thể chọn thuật toán khác để chạychạy
-    * Nhập puzzle bằng tay (nút NHẬP TAY).
+    * sau khi thuật toán đang chạy, các thông số như (số bước, thời gian tìm) sẽ hiển thị.
+    * Nhấn nút "RESET" để có thể thiết lặp lại trạng thái ban đầu và chọn thuật toán khác để chạy.
+    * Nhập puzzle bằng tay cho phép bạn đưa trạng thái ban đầu (nút "NHẬP TAY").
 
 ## 5. SINH VIÊN THỰC HIỆN
 
