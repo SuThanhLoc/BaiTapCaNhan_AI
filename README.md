@@ -11,9 +11,9 @@
 
 Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm kiếm bao gồm:
 
-* **Không gian trạng thái (State Space):** Tập hợp tất cả các cấu hình (sắp xếp) có thể có của các ô số trên bảng 3x3.
-* **Trạng thái ban đầu (Initial State):** Cấu hình xuất phát của bài toán.
-* **Trạng thái đích (Goal State):** Cấu hình mong muốn mà thuật toán cần đạt tới (thường là các số được sắp xếp theo thứ tự từ 1 đến 8, với ô trống ở vị trí cuối cùng hoặc một vị trí xác định trước).
+* **Không gian trạng thái (State Space):** Tập hợp tất cả các trạng thái có thể có của các ô số trên bảng 3x3.
+* **Trạng thái ban đầu (Initial State):** Trạng thái bắt đầu của bài toán.
+* **Trạng thái đích (Goal State):** Là trạng thái mà thuật toán cần đạt tới (các số được sắp xếp theo thứ tự từ 1 đến 8, với ô trống ở vị trí cuối cùng).
 * **Hành động (Actions):** Các phép toán cho phép chuyển từ trạng thái này sang trạng thái khác. Trong bài toán 8-puzzle, hành động là di chuyển ô trống lên, xuống, trái, hoặc phải (nếu có thể).
 * **Hàm chuyển đổi (Transition Model):** Mô tả trạng thái kết quả khi thực hiện một hành động từ một trạng thái nhất định.
 * **Chi phí đường đi (Path Cost):** Thường là số bước di chuyển để đạt được trạng thái đích. Trong một số thuật toán (như Uniform Cost Search), mỗi bước có thể có chi phí khác nhau, nhưng trong bài toán 8-puzzle cơ bản, mỗi bước thường có chi phí là 1.
@@ -76,14 +76,14 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 
     ![alt text](A_START.gif)
 * **Nhận xét hiệu suất:**
-    * Ưu điểm: Hoàn chỉnh và tối ưu nếu hàm heuristic $h(n)$ là chấp nhận được (admissible - không đánh giá quá cao chi phí thực tế) và nhất quán (consistent - monotonic). Thường hiệu quả hơn nhiều so với các thuật toán không thông tin.
-    * Nhược điểm: Vẫn có thể tốn nhiều bộ nhớ để lưu trữ các nút trên biên.
+    * Ưu điểm: Hoàn chỉnh và tối ưu nếu hàm heuristic $h(n)$ là chấp nhận được (không đánh giá quá cao chi phí thực tế) và nhất quán. Thường hiệu quả hơn nhiều so với các thuật toán không thông tin.
+    * Nhược điểm: Vẫn tốn nhiều bộ nhớ để lưu trữ các nút trên biên.
 
 #### c. IDA* Search
 * **Mô tả ngắn gọn:** Phiên bản A* sử dụng ít bộ nhớ hơn bằng cách áp dụng kỹ thuật sâu dần lặp dựa trên giá trị $f(n)$.
 *   ![alt text](IDA_START.gif)
 * **Nhận xét hiệu suất:**
-    * Ưu điểm: Hoàn chỉnh và tối ưu (với heuristic chấp nhận được), sử dụng bộ nhớ hiệu quả như DFS.
+    * Ưu điểm: Hoàn chỉnh và tối ưu (heuristic chấp nhận được), sử dụng bộ nhớ hiệu quả như DFS.
     * Nhược điểm: Lặp lại việc duyệt các nút, có thể tốn thời gian hơn A* trong một số trường hợp.
 
 ---
@@ -91,7 +91,7 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 ### 2.3. Tìm kiếm cục bộ
 
 * **Đặc điểm chung:** Duy trì một trạng thái hiện tại và cố gắng cải thiện nó bằng cách di chuyển đến các trạng thái lân cận. Không quan tâm đến đường đi đã qua.
-* **Thành phần chính của bài toán:** Trạng thái hiện tại, hàm đánh giá (thường là heuristic để cực tiểu hóa).
+* **Thành phần chính của bài toán:** Trạng thái hiện tại, hàm đánh giá (heuristic để cực tiểu hóa).
 * **Solution:** Trạng thái cuối cùng đạt được, hy vọng là trạng thái đích hoặc một trạng thái tốt.
 
 #### a. Simple Hill Climbing
@@ -113,21 +113,21 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
     * Nhược điểm: Vẫn không đảm bảo hoàn chỉnh hay tối ưu.
 
 #### d. Simulated Annealing
-* **Mô tả ngắn gọn:** Cho phép di chuyển đến trạng thái "xấu hơn" với một xác suất nhất định, xác suất này giảm dần theo thời gian (nhiệt độ). Giúp thoát khỏi các cực tiểu địa phương.
+* **Mô tả ngắn gọn:** Cho phép di chuyển đến trạng thái "xấu hơn" với một xác suất nhất định, xác suất này giảm dần theo thời gian. Giúp thoát khỏi các cực tiểu địa phương.
 *   
 * **Nhận xét hiệu suất:**
     * Ưu điểm: Có khả năng tìm ra lời giải tốt hơn Hill Climbing, hoàn chỉnh nếu nhiệt độ giảm đủ chậm.
-    * Nhược điểm: Cần tinh chỉnh các tham số (lịch trình giảm nhiệt độ), có thể chậm.
+    * Nhược điểm: Cần tinh chỉnh các tham số, có thể chậm.
 
 #### e. Genetic Algorithm
-* **Mô tả ngắn gọn:** Mô phỏng quá trình tiến hóa tự nhiên, duy trì một quần thể các lời giải, áp dụng các toán tử lai ghép (crossover) và đột biến (mutation) để tạo ra các thế hệ mới.
+* **Mô tả ngắn gọn:** Mô phỏng quá trình tiến hóa tự nhiên, duy trì một tập các lời giải, áp dụng các toán tử lai ghép (crossover) và đột biến (mutation) để tạo ra các thế hệ mới.
 *   ![alt text](GENETIC.gif)
 * **Nhận xét hiệu suất:**
     * Ưu điểm: Có khả năng tìm kiếm trong không gian lớn và phức tạp, thoát khỏi cực tiểu địa phương.
-    * Nhược điểm: Cần nhiều tham số để tinh chỉnh, có thể hội tụ chậm, không đảm bảo tìm ra lời giải tối ưu tuyệt đối.
+    * Nhược điểm: Cần nhiều tham số để tinh chỉnh, không đảm bảo tìm ra lời giải tối ưu tuyệt đối.
 
 #### f. Beam Search
-* **Mô tả ngắn gọn:** Biến thể của Best-First Search, chỉ giữ lại một số lượng giới hạn (beam width - độ rộng chùm) các trạng thái tốt nhất ở mỗi bước để mở rộng, nhằm giảm bộ nhớ.
+* **Mô tả ngắn gọn:** Biến thể của Best-First Search, chỉ giữ lại một số lượng giới hạn (beam width) các trạng thái tốt nhất ở mỗi bước để mở rộng, nhằm giảm bộ nhớ.
 *   ![alt text](BEAM.gif)
 * **Nhận xét hiệu suất:**
     * Ưu điểm: Giảm đáng kể bộ nhớ so với Best-First Search toàn cục.
@@ -138,11 +138,11 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 ### 2.4. Tìm kiếm trong môi trường phức tạp
 
 #### a. And-Or Search
-* **Mô tả ngắn gọn:** Dùng cho các bài toán có thể được phân rã thành các bài toán con (AND nodes - nút Và) hoặc có nhiều cách giải quyết khác nhau (OR nodes - nút Hoặc).
+* **Mô tả ngắn gọn:** Dùng cho các bài toán có thể được phân rã thành các bài toán con hoặc có nhiều cách giải quyết khác nhau.
 * **Thành phần chính của bài toán:** Các nút AND (cần giải quyết tất cả các bài toán con) và nút OR (chỉ cần giải quyết một trong các bài toán con).
 * **Solution:** Một cây con lời giải, chứng minh rằng bài toán gốc có thể được giải quyết.
 * **Nhận xét hiệu suất:**
-    * Trong ngữ cảnh 8-puzzle tiêu chuẩn, And-Or Search không phải là cách tiếp cận trực tiếp phổ biến. Nó phù hợp hơn cho các bài toán lập kế hoạch hoặc suy luận logic. Nếu bạn có một cách áp dụng cụ thể, hãy mô tả nó.
+    * And-Or Search không phải là cách tiếp cận trực tiếp phổ biến. Nó phù hợp hơn cho các bài toán lập kế hoạch hoặc suy luận logic.
 
 ---
 
@@ -151,7 +151,6 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 * **Đặc điểm chung:** Tìm kiếm một trạng thái thỏa mãn một tập hợp các ràng buộc.
 * **Thành phần chính của bài toán:** Các biến, miền giá trị cho mỗi biến, và các ràng buộc giữa các biến.
 * **Solution:** Một phép gán giá trị cho tất cả các biến sao cho tất cả các ràng buộc đều được thỏa mãn.
-* *Lưu ý:* Bài toán 8-puzzle có thể được coi là một bài toán tìm đường đi, không phải là một CSP điển hình. Tuy nhiên, các kỹ thuật CSP có thể được điều chỉnh hoặc truyền cảm hứng cho các thuật toán tìm kiếm.
 
 #### a. Backtracking Search
 * **Mô tả ngắn gọn:** Xây dựng lời giải từng phần, nếu một lựa chọn dẫn đến vi phạm ràng buộc hoặc không thể hoàn thành lời giải, thuật toán sẽ quay lui và thử lựa chọn khác. Đây là một dạng của DFS.
@@ -185,6 +184,12 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
     * Nhược điểm: Cần nhiều lượt tương tác để học, việc thiết kế phần thưởng phù hợp là quan trọng, tốn nhiều thời gian và bộ nhớ để lưu trữ bảng Q_table cho các không gian trạng thái lớn.
 
 ---
+### Một số so sánh chung về các nhóm thuật toán
+* **Tìm kiếm không có thông tin:** Các thuật toán trong nhóm này thường đảm bảo tìm ra lời giải nếu tồn tại. Tuy nhiên, chúng có thể không hiệu quả với không gian trạng thái lớn, đặc biệt là DFS không tối ưu.
+* **Tìm kiếm có thông tin:** Các thuật toán trong nhóm này thường nhanh hơn nhờ sử dụng thông tin từ hàm heuristic
+*   ![alt text](DFS.gif)
+*   ![alt text](A_START.gif)
+
 ### Một vài nhận xét chung về hiệu suất các nhóm thuật toán
 
 * **Tìm kiếm không có thông tin:** Đảm bảo tính hoàn chỉnh và tối ưu (BFS, IDDFS, UCS) nhưng thường chậm và tốn bộ nhớ cho các bài toán phức tạp. DFS nhanh hơn về bộ nhớ nhưng không tối ưu.
@@ -198,7 +203,6 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
     * Xây dựng được giao diện người dùng cho phép người dùng tương tác và quan sát quá trình giải.
     * Phân tích và so sánh cho thấy thuật toán một số thuật toán có vẻ hiệu quả nhất trong việc giải 8-puzzle.
     * Rút ra những bài học từ những lần vấp ngã (thuật toán chạy không như ý muốn).
-    * Những điều học hỏi được qua dự án.
 
 ## 4. HƯỚNG DẪN THỰC THI
 
@@ -217,4 +221,4 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 
 * **Họ và tên:** Sử Thanh Lộc
 * **Mã số sinh viên:** 23110371
-* **(Tùy chọn) Link GitHub (nếu có):** https://github.com/SuThanhLoc/BaiTapCaNhan_AI
+* **Link GitHub:** https://github.com/SuThanhLoc/BaiTapCaNhan_AI
