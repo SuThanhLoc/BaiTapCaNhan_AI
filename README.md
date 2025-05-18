@@ -215,6 +215,6 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 
 ## 5. SINH VIÊN THỰC HIỆN
 
-* **Họ và tên:** Sử Thanh LộcLộc
-* **Mã số sinh viên:** [Mã số sinh viên của bạn]
+* **Họ và tên:** Sử Thanh Lộc
+* **Mã số sinh viên:** 23110371
 * **(Tùy chọn) Link GitHub (nếu có):** https://github.com/SuThanhLoc/BaiTapCaNhan_AI
