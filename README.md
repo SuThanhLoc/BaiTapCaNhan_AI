@@ -73,6 +73,7 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 
 #### b. A* Search (A Sao)
 * **Mô tả ngắn gọn:** Kết hợp chi phí đường đi thực tế $g(n)$ và chi phí ước lượng $h(n)$ để đánh giá nút: $f(n) = g(n) + h(n)$.
+
     ![alt text](A_START.gif)
 * **Nhận xét hiệu suất:**
     * Ưu điểm: Hoàn chỉnh và tối ưu nếu hàm heuristic $h(n)$ là chấp nhận được (admissible - không đánh giá quá cao chi phí thực tế) và nhất quán (consistent - monotonic). Thường hiệu quả hơn nhiều so với các thuật toán không thông tin.
