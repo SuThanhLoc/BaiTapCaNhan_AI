@@ -1,158 +1,281 @@
-# Dự án Giải Bài Toán 8-Puzzle Bằng Các Thuật Toán Tìm Kiếm
+# GIẢI BÀI TOÁN 8 PUZZLE BẰNG CÁC THUẬT TOÁN TÌM KIẾM
 
-## 1. Mục tiêu
+## 1. MỤC TIÊU
 
-Dự án này được xây dựng nhằm mục đích triển khai và mô phỏng các thuật toán tìm kiếm khác nhau để giải quyết bài toán 8-Puzzle. Qua đó, người dùng có thể hiểu rõ hơn về cách hoạt động, ưu nhược điểm và so sánh hiệu suất của từng thuật toán trong việc tìm kiếm lời giải cho một bài toán cụ thể trong lĩnh vực Trí Tuệ Nhân Tạo. Dự án cung cấp một giao diện trực quan (`UI.py`) để người dùng tương tác và quan sát quá trình giải của các thuật toán được định nghĩa trong `AI.py`.
+* Mô tả mục tiêu của dự án này. Ví dụ:
+    * Nghiên cứu và triển khai các thuật toán tìm kiếm khác nhau để giải bài toán 8-puzzle.
+    * Phân tích, so sánh hiệu suất (thời gian, số bước, bộ nhớ sử dụng) của các thuật toán.
+    * Xây dựng một giao diện người dùng trực quan để minh họa quá trình giải và tương tác với các thuật toán.
 
-## 2. Nội dung
+## 2. NỘI DUNG
 
-### 2.1. Các thuật toán Tìm kiếm không có thông tin (Uninformed Search Algorithms)
+Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm kiếm bao gồm:
 
-Phần này tập trung vào các thuật toán tìm kiếm không sử dụng thông tin bổ sung về bài toán (heuristic) để hướng dẫn quá trình tìm kiếm.
+* **Không gian trạng thái (State Space):** Tập hợp tất cả các cấu hình (sắp xếp) có thể có của các ô số trên bảng 3x3.
+* **Trạng thái ban đầu (Initial State):** Cấu hình xuất phát của bài toán.
+* **Trạng thái đích (Goal State):** Cấu hình mong muốn mà thuật toán cần đạt tới (thường là các số được sắp xếp theo thứ tự từ 1 đến 8, với ô trống ở vị trí cuối cùng hoặc một vị trí xác định trước).
+* **Hành động (Actions):** Các phép toán cho phép chuyển từ trạng thái này sang trạng thái khác. Trong bài toán 8-puzzle, hành động là di chuyển ô trống lên, xuống, trái, hoặc phải (nếu có thể).
+* **Hàm chuyển đổi (Transition Model):** Mô tả trạng thái kết quả khi thực hiện một hành động từ một trạng thái nhất định.
+* **Chi phí đường đi (Path Cost):** Thường là số bước di chuyển để đạt được trạng thái đích. Trong một số thuật toán (như Uniform Cost Search), mỗi bước có thể có chi phí khác nhau, nhưng trong bài toán 8-puzzle cơ bản, mỗi bước thường có chi phí là 1.
 
-* **Thành phần chính của bài toán tìm kiếm và solution:**
-    * **Bài toán tìm kiếm** thường bao gồm các thành phần sau:
-        * **Không gian trạng thái (State Space):** Tập hợp tất cả các trạng thái có thể đạt được của bài toán. Trong 8-Puzzle, mỗi cách sắp xếp các ô số là một trạng thái.
-        * **Trạng thái ban đầu (Initial State):** Trạng thái xuất phát của bài toán.
-        * **Trạng thái đích (Goal State):** Một hoặc nhiều trạng thái mà bài toán cần đạt tới.
-        * **Hành động (Actions):** Các thao tác có thể thực hiện để chuyển từ trạng thái này sang trạng thái khác. Trong 8-Puzzle, đó là việc di chuyển ô trống lên, xuống, trái, hoặc phải.
-        * **Hàm chuyển trạng thái (Transition Model):** Mô tả trạng thái kết quả khi thực hiện một hành động từ một trạng thái cụ thể.
-        * **Chi phí đường đi (Path Cost):** Hàm gán một giá trị chi phí cho một đường đi. Trong trường hợp 8-Puzzle cơ bản, mỗi bước di chuyển có thể có chi phí là 1.
-    * **Solution (Lời giải):** Là một dãy các hành động (một đường đi) từ trạng thái ban đầu đến trạng thái đích. Một lời giải tối ưu là lời giải có chi phí đường đi thấp nhất.
-
-* **Các thuật toán được triển khai (trong `AI.py`):**
-    * **Tìm kiếm theo chiều rộng (Breadth-First Search - BFS):**
-        * *Nguyên tắc:* Duyệt tất cả các trạng thái ở độ sâu hiện tại trước khi chuyển sang các trạng thái ở độ sâu tiếp theo.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình BFS duyệt các trạng thái của 8-Puzzle tại đây.)*
-    * **Tìm kiếm chi phí đồng nhất (Uniform Cost Search - UCS):**
-        * *Nguyên tắc:* Mở rộng nút có chi phí đường đi `g(n)` nhỏ nhất từ trạng thái ban đầu.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình UCS tại đây, đặc biệt nếu chi phí bước đi khác nhau.)*
-    * **Tìm kiếm theo chiều sâu (Depth-First Search - DFS):**
-        * *Nguyên tắc:* Luôn ưu tiên mở rộng nút ở nhánh sâu nhất trong cây tìm kiếm.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình DFS duyệt các trạng thái tại đây.)*
-    * **Tìm kiếm sâu lặp (Iterative Deepening Depth-First Search - IDDFS):**
-        * *Nguyên tắc:* Kết hợp ưu điểm của DFS (ít tốn bộ nhớ) và BFS (tìm lời giải nông nhất, tính đầy đủ) bằng cách thực hiện DFS với giới hạn độ sâu tăng dần.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình IDDFS tại đây.)*
-    * **Tìm kiếm Backtracking (Backtracking Search):**
-        * *Nguyên tắc:* Một dạng của DFS, thử từng khả năng cho đến khi tìm thấy lời giải. Nếu một nhánh không dẫn đến lời giải, nó sẽ quay lui (backtrack) và thử nhánh khác.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình Backtracking tại đây.)*
-
-* **So sánh hiệu suất:**
-    * *(Đề xuất: Tại đây, bạn có thể trình bày bảng hoặc biểu đồ so sánh hiệu suất của các thuật toán trên dựa trên các tiêu chí như: Thời gian tìm kiếm, Số bước trong lời giải, Số trạng thái đã duyệt, Bộ nhớ sử dụng. Dữ liệu này có thể thu thập được từ việc chạy các thuật toán trong `UI.py` và `AI.py`.)*
-
-* **Nhận xét về hiệu suất trên 8-Puzzle:**
-    * **BFS:** Luôn tìm thấy lời giải ngắn nhất (nếu tồn tại) vì nó duyệt theo từng mức. Tuy nhiên, tốn nhiều bộ nhớ do phải lưu trữ tất cả các nút ở biên.
-    * **UCS:** Tương tự BFS khi chi phí mỗi bước là như nhau; đảm bảo tìm ra lời giải có chi phí thấp nhất. Cũng gặp vấn đề về bộ nhớ.
-    * **DFS:** Ít tốn bộ nhớ hơn BFS vì chỉ lưu trữ các nút trên đường đi hiện tại. Tuy nhiên, có thể bị lạc vào các nhánh rất sâu và không đảm bảo tìm ra lời giải ngắn nhất (hoặc có thể không tìm ra lời giải nếu không gian tìm kiếm vô hạn và không có giới hạn độ sâu).
-    * **IDDFS:** Kết hợp được ưu điểm của BFS và DFS. Tìm ra lời giải ngắn nhất và ít tốn bộ nhớ hơn BFS. Tuy nhiên, có thể duyệt lại các trạng thái ở các mức trên nhiều lần.
-    * **Backtracking Search:** Tương tự DFS về mặt không gian và có thể không tối ưu về lời giải. Hiệu quả phụ thuộc nhiều vào thứ tự thử các hành động.
-
-### 2.2. Các thuật toán Tìm kiếm có thông tin (Informed Search Algorithms)
-
-Các thuật toán này sử dụng hàm đánh giá heuristic `h(n)` để ước lượng chi phí từ trạng thái hiện tại đến trạng thái đích, giúp hướng dẫn tìm kiếm hiệu quả hơn.
-
-* **Thành phần chính và solution:** Tương tự như mục 2.1. Điểm khác biệt chính là việc sử dụng hàm heuristic.
-
-* **Các hàm Heuristic được sử dụng (trong `AI.py`):**
-    * **Số ô sai vị trí (Misplaced Tiles / Hamming Distance):** Đếm số ô (không tính ô trống) đang không nằm ở vị trí đúng so với trạng thái đích. (Hàm `Count_Different` trong `AI.py`)
-    * **Khoảng cách Manhattan (Manhattan Distance):** Tổng khoảng cách (theo chiều ngang và chiều dọc) của mỗi ô (không tính ô trống) từ vị trí hiện tại đến vị trí đúng của nó trong trạng thái đích. (Hàm `Manhattan_Heuristic` trong `AI.py`)
-
-* **Các thuật toán được triển khai (trong `AI.py`):**
-    * **Tìm kiếm Tham lam (Greedy Best-First Search):**
-        * *Nguyên tắc:* Luôn mở rộng nút được đánh giá là gần đích nhất theo hàm heuristic `h(n)`.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình Greedy Search tại đây.)*
-    * **A\* Search:**
-        * *Nguyên tắc:* Mở rộng nút có tổng `f(n) = g(n) + h(n)` nhỏ nhất, trong đó `g(n)` là chi phí thực tế từ trạng thái đầu đến `n`, và `h(n)` là chi phí ước lượng từ `n` đến đích.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình A\* Search tại đây.)*
-    * **IDA\* (Iterative Deepening A\*):**
-        * *Nguyên tắc:* Tương tự IDDFS nhưng thay vì giới hạn độ sâu, nó giới hạn giá trị `f(n)`.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình IDA\* tại đây.)*
-    * **Beam Search:**
-        * *Nguyên tắc:* Tại mỗi bước, chỉ giữ lại một số lượng `k` (beam width) trạng thái tốt nhất để mở rộng tiếp.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình Beam Search tại đây.)*
-    * **Tìm kiếm Leo đồi (Hill Climbing):**
-        * *Các biến thể:*
-            * **Simple Hill Climbing:** Chọn một hàng xóm tốt hơn trạng thái hiện tại.
-            * **Stochastic Hill Climbing:** Chọn ngẫu nhiên một trong số các hàng xóm tốt hơn.
-            * **Steepest Ascent Hill Climbing:** Chọn hàng xóm tốt nhất trong tất cả các hàng xóm.
-        * *Nguyên tắc:* Di chuyển đến trạng thái lân cận tốt hơn cho đến khi không còn trạng thái lân cận nào tốt hơn (đạt local maximum).
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo ảnh GIF cho từng biến thể của Hill Climbing.)*
-    * **Luyện kim mô phỏng (Simulated Annealing):**
-        * *Nguyên tắc:* Tương tự Hill Climbing nhưng cho phép di chuyển đến trạng thái xấu hơn với một xác suất nhất định, giảm dần theo "nhiệt độ" để tránh bị kẹt ở local maximum.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình Simulated Annealing.)*
-    * **Thuật toán Di truyền (Genetic Algorithm):**
-        * *Nguyên tắc:* Mô phỏng quá trình tiến hóa tự nhiên, sử dụng các toán tử như lựa chọn, lai ghép (crossover), và đột biến (mutation) trên một quần thể các giải pháp tiềm năng.
-        * *Hình ảnh gif minh họa:*
-            * *(Đề xuất: Bạn có thể tạo một ảnh GIF minh họa quá trình Genetic Algorithm.)*
-    * **Tìm kiếm AND-OR (AND-OR Search):**
-        * *Nguyên tắc:* Dùng để giải các bài toán có thể được phân rã thành các bài toán con (AND nodes) hoặc các lựa chọn thay thế (OR nodes). Kết quả được in ra console.
-        * *Minh họa:* Quá trình tìm kiếm và kết quả được hiển thị trên console.
-    * **Tìm kiếm trong không gian niềm tin (Belief State Search):**
-        * *Nguyên tắc:* Áp dụng cho các môi trường không quan sát được hoàn toàn, nơi agent duy trì một "niềm tin" về trạng thái hiện tại của nó. Kết quả được in ra console.
-        * *Minh họa:* Quá trình tìm kiếm và kết quả được hiển thị trên console.
-    * **Q-Learning:**
-        * *Nguyên tắc:* Một thuật toán học tăng cường không cần mô hình, học một hàm giá trị hành động (Q-value) để chọn hành động tối ưu.
-        * *Minh họa:* Quá trình học và đường đi tìm được (có thể in ra console hoặc trực quan hóa nếu được hỗ trợ).
-    * **Forward Checking (trong CSP):**
-        * *Nguyên tắc:* Một kỹ thuật được sử dụng trong các bài toán thỏa mãn ràng buộc (CSP). Khi một biến được gán một giá trị, nó kiểm tra và loại bỏ các giá trị không nhất quán khỏi các biến chưa được gán.
-        * *Minh họa:* Quá trình tìm kiếm và đường đi.
-    * **AC-3 (trong CSP):**
-        * *Nguyên tắc:* Một thuật toán để đảm bảo tính nhất quán cung (arc consistency) trong các bài toán CSP. Nó tạo ra các bảng ngẫu nhiên và lọc để đảm bảo các ràng buộc.
-        * *Minh họa:* Kết quả là một bảng (board) thỏa mãn các ràng buộc nhất định.
-
-* **So sánh hiệu suất:**
-    * *(Đề xuất: Tương tự mục 2.1, trình bày bảng hoặc biểu đồ so sánh hiệu suất của các thuật toán có thông tin, có thể so sánh thêm ảnh hưởng của các hàm heuristic khác nhau.)*
-
-* **Nhận xét về hiệu suất trên 8-Puzzle:**
-    * **Greedy Search:** Thường nhanh chóng tìm ra lời giải nhưng không đảm bảo tối ưu. Chất lượng lời giải phụ thuộc nhiều vào hàm heuristic.
-    * **A\* Search:** Nếu hàm heuristic là chấp nhận được (admissible - không đánh giá quá cao chi phí thực tế), A\* đảm bảo tìm ra lời giải tối ưu và thường hiệu quả hơn nhiều so_với các thuật toán không có thông tin. Với heuristic Manhattan, A\* hoạt động tốt cho 8-Puzzle.
-    * **IDA\*:** Giống A\* về tính tối ưu và sử dụng heuristic, nhưng tiết kiệm bộ nhớ hơn đáng kể, phù hợp cho các không gian tìm kiếm lớn.
-    * **Beam Search:** Không đảm bảo tìm ra lời giải tối ưu hoặc thậm chí là bất kỳ lời giải nào, nhưng có thể hiệu quả về mặt thời gian và bộ nhớ khi beam width được chọn hợp lý.
-    * **Hill Climbing:** Dễ bị kẹt ở local maximum (trạng thái tốt hơn tất cả hàng xóm nhưng không phải là trạng thái tốt nhất toàn cục). Các biến thể như Stochastic Hill Climbing hoặc khởi tạo lại ngẫu nhiên có thể giúp giảm thiểu vấn đề này.
-    * **Simulated Annealing:** Có khả năng thoát khỏi local maximum tốt hơn Hill Climbing, nhưng cần điều chỉnh cẩn thận các tham số (nhiệt độ ban đầu, tốc độ làm nguội).
-    * **Genetic Algorithm:** Có thể tìm ra các giải pháp tốt cho các bài toán phức tạp, nhưng thường đòi hỏi nhiều thời gian tính toán và điều chỉnh tham số (kích thước quần thể, tỷ lệ lai ghép/đột biến).
-    * **AND-OR Search, Belief State Search:** Các thuật toán chuyên biệt cho các loại bài toán cụ thể hơn là tìm kiếm đường đi đơn giản. Hiệu suất phụ thuộc vào cấu trúc của bài toán.
-    * **Q-Learning:** Hiệu suất phụ thuộc vào số lượng episodes huấn luyện, hàm phần thưởng, và các tham số như epsilon (exploration rate). Có thể tìm ra chính sách tối ưu sau khi học đủ.
-    * **Forward Checking, AC-3:** Là các thuật toán/kỹ thuật cho Bài toán Thỏa mãn Ràng buộc (CSP), giúp giảm không gian tìm kiếm bằng cách loại bỏ sớm các giá trị không thể dẫn đến lời giải.
-
-### 2.3. Giao diện người dùng (`UI.py`)
-
-* **Mô tả chung:** File `UI.py` sử dụng thư viện Pygame để tạo giao diện đồ họa cho người dùng tương tác với bài toán 8-Puzzle.
-* **Chức năng chính:**
-    * Hiển thị trạng thái đầu, trạng thái hiện tại và trạng thái đích của puzzle.
-    * Cho phép người dùng chọn thuật toán để giải.
-    * Cho phép tạo puzzle ngẫu nhiên hoặc nhập puzzle thủ công.
-    * Hiển thị quá trình giải từng bước một hoặc xem kết quả cuối cùng.
-    * Hiển thị thông tin về số bước và thời gian tìm kiếm (nếu có).
-    * Thông báo về khả năng giải được của puzzle.
-* **(Đề xuất: Bạn có thể thêm ảnh chụp màn hình giao diện tại đây.)**
-
-## 3. Kết luận
-
-Dự án này đã thành công trong việc:
-
-* **Triển khai đa dạng các thuật toán tìm kiếm:** Bao gồm cả các thuật toán tìm kiếm không có thông tin và có thông tin, cũng như một số thuật toán nâng cao và học tăng cường.
-* **Xây dựng giao diện người dùng trực quan:** Giúp người dùng dễ dàng tương tác, thử nghiệm và quan sát cách các thuật toán hoạt động để giải bài toán 8-Puzzle.
-* **Cung cấp nền tảng để so sánh và đánh giá thuật toán:** Người dùng có thể tự mình so sánh hiệu suất của các thuật toán khác nhau dựa trên thời gian giải, số bước, và các thông tin khác được cung cấp bởi giao diện.
-* **Minh họa các khái niệm cơ bản của Trí Tuệ Nhân Tạo:** Giúp người học hiểu rõ hơn về các khái niệm như không gian trạng thái, heuristic, và các chiến lược tìm kiếm khác nhau.
-
-**(Đề xuất: Bạn có thể bổ sung thêm các kết quả cụ thể đã đạt được, ví dụ như thuật toán nào hoạt động hiệu quả nhất cho các trường hợp thử nghiệm cụ thể, hoặc những thách thức gặp phải và cách giải quyết.)**
+**Solution (Lời giải):** Là một chuỗi các hành động (hoặc một dãy các trạng thái) dẫn từ trạng thái ban đầu đến trạng thái đích. Một lời giải tối ưu là lời giải có chi phí đường đi nhỏ nhất.
 
 ---
 
-**Hướng dẫn sử dụng:**
+### 2.1. Tìm kiếm không có thông tin (Uninformed Search)
 
-1.  Đảm bảo bạn đã cài đặt thư viện Pygame (`pip install pygame`).
-2.  Chạy file `UI.py` để khởi động chương trình.
-3.  Sử dụng các nút trên giao diện để tạo puzzle, chọn thuật toán và bắt đầu quá trình giải.
+* **Đặc điểm chung:** Các thuật toán trong nhóm này không sử dụng bất kỳ thông tin nào về "khoảng cách" hay "hướng" đến trạng thái đích. Chúng chỉ duyệt qua không gian trạng thái một cách có hệ thống.
+* **Thành phần chính của bài toán:** Như đã mô tả ở trên.
+* **Solution:** Một đường đi từ trạng thái đầu đến trạng thái đích.
+
+#### a. BFS (Breadth-First Search - Tìm kiếm theo chiều rộng)
+* **Mô tả ngắn gọn:** Duyệt các nút theo từng mức, đảm bảo tìm ra lời giải nông nhất (ít bước nhất).
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Hoàn chỉnh (chắc chắn tìm thấy lời giải nếu có), tối ưu (tìm ra lời giải ít bước nhất).
+    * Nhược điểm: Tốn nhiều bộ nhớ (lưu trữ tất cả các nút ở biên), thời gian thực thi có thể lâu nếu lời giải ở sâu.
+
+#### b. DFS (Depth-First Search - Tìm kiếm theo chiều sâu)
+* **Mô tả ngắn gọn:** Ưu tiên duyệt sâu xuống một nhánh của cây tìm kiếm trước khi quay lui.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Ít tốn bộ nhớ hơn BFS (chỉ lưu trữ các nút trên đường đi hiện tại).
+    * Nhược điểm: Không hoàn chỉnh nếu cây có nhánh vô hạn và không có kiểm tra lặp, không đảm bảo tìm ra lời giải tối ưu. Trong bài toán 8-puzzle với không gian trạng thái hữu hạn, DFS có thể tìm ra lời giải nhưng không chắc là ngắn nhất.
+
+#### c. IDDFS (Iterative Deepening Depth-First Search - Tìm kiếm sâu dần lặp)
+* **Mô tả ngắn gọn:** Kết hợp ưu điểm của BFS (tính tối ưu về số bước) và DFS (ít tốn bộ nhớ) bằng cách thực hiện DFS lặp đi lặp lại với giới hạn độ sâu tăng dần.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Hoàn chỉnh, tối ưu (tìm ra lời giải ít bước nhất), ít tốn bộ nhớ hơn BFS.
+    * Nhược điểm: Lặp lại việc duyệt các nút ở các mức trên, nhưng chi phí này thường không đáng kể so với lợi ích.
+
+#### d. UCS (Uniform Cost Search - Tìm kiếm chi phí đồng nhất)
+* **Mô tả ngắn gọn:** Mở rộng nút có chi phí đường đi $g(n)$ nhỏ nhất từ trạng thái bắt đầu. Tương tự BFS nếu chi phí mỗi bước là như nhau.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Hoàn chỉnh, tối ưu (nếu chi phí đường đi là không âm).
+    * Nhược điểm: Có thể khám phá các đường đi dài không cần thiết nếu chi phí thấp, tương tự BFS về bộ nhớ và thời gian trong trường hợp chi phí bước là 1.
+
+---
+
+### 2.2. Tìm kiếm có thông tin (Informed Search / Heuristic Search)
+
+* **Đặc điểm chung:** Sử dụng hàm đánh giá heuristic $h(n)$ để ước lượng chi phí từ trạng thái hiện tại $n$ đến trạng thái đích.
+* **Thành phần chính của bài toán:** Bổ sung hàm heuristic $h(n)$.
+* **Solution:** Một đường đi từ trạng thái đầu đến trạng thái đích, thường được tối ưu hóa hơn nhờ heuristic.
+
+#### a. Greedy Search (Best-First Search tham lam)
+* **Mô tả ngắn gọn:** Luôn chọn mở rộng nút có vẻ "gần" đích nhất theo hàm heuristic $h(n)$.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Thường nhanh hơn các thuật toán không thông tin.
+    * Nhược điểm: Không hoàn chỉnh, không đảm bảo tối ưu (có thể bị "mắc kẹt" ở các cực tiểu địa phương hoặc đi theo đường dài).
+
+#### b. A* Search (A Sao)
+* **Mô tả ngắn gọn:** Kết hợp chi phí đường đi thực tế $g(n)$ và chi phí ước lượng $h(n)$ để đánh giá nút: $f(n) = g(n) + h(n)$.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Hoàn chỉnh và tối ưu nếu hàm heuristic $h(n)$ là chấp nhận được (admissible - không đánh giá quá cao chi phí thực tế) và nhất quán (consistent - monotonic). Thường hiệu quả hơn nhiều so với các thuật toán không thông tin.
+    * Nhược điểm: Vẫn có thể tốn nhiều bộ nhớ để lưu trữ các nút trên biên.
+
+#### c. IDA* Search (Iterative Deepening A* - A* sâu dần lặp)
+* **Mô tả ngắn gọn:** Phiên bản A* sử dụng ít bộ nhớ hơn bằng cách áp dụng kỹ thuật sâu dần lặp dựa trên giá trị $f(n)$.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Hoàn chỉnh và tối ưu (với heuristic chấp nhận được), sử dụng bộ nhớ hiệu quả như DFS.
+    * Nhược điểm: Lặp lại việc duyệt các nút, có thể tốn thời gian hơn A* trong một số trường hợp.
+
+---
+
+### 2.3. Tìm kiếm cục bộ (Local Search)
+
+* **Đặc điểm chung:** Duy trì một trạng thái hiện tại và cố gắng cải thiện nó bằng cách di chuyển đến các trạng thái lân cận. Không quan tâm đến đường đi đã qua.
+* **Thành phần chính của bài toán:** Trạng thái hiện tại, hàm đánh giá (thường là heuristic để cực tiểu hóa).
+* **Solution:** Trạng thái cuối cùng đạt được, hy vọng là trạng thái đích hoặc một trạng thái tốt.
+
+#### a. Simple Hill Climbing (Leo đồi đơn giản)
+* **Mô tả ngắn gọn:** Liên tục di chuyển đến trạng thái lân cận tốt hơn cho đến khi không còn trạng thái lân cận nào tốt hơn (đạt đỉnh cục bộ).
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Ít tốn bộ nhớ, nhanh.
+    * Nhược điểm: Dễ bị mắc kẹt ở cực tiểu địa phương, không hoàn chỉnh, không tối ưu.
+
+#### b. Steepest Ascent Hill Climbing (Leo đồi dốc nhất)
+* **Mô tả ngắn gọn:** Tương tự Simple Hill Climbing, nhưng chọn trạng thái lân cận "tốt nhất" (dốc nhất) trong số tất cả các lân cận.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Tương tự Simple Hill Climbing.
+    * Nhược điểm: Tương tự Simple Hill Climbing, vẫn có thể bị mắc kẹt.
+
+#### c. Stochastic Hill Climbing (Leo đồi ngẫu nhiên)
+* **Mô tả ngắn gọn:** Chọn một trạng thái lân cận tốt hơn một cách ngẫu nhiên, cho phép thoát khỏi một số đỉnh cục bộ.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Có khả năng thoát khỏi cực tiểu địa phương tốt hơn Simple/Steepest Ascent.
+    * Nhược điểm: Vẫn không đảm bảo hoàn chỉnh hay tối ưu.
+
+#### d. Simulated Annealing (Luyện kim mô phỏng)
+* **Mô tả ngắn gọn:** Cho phép di chuyển đến trạng thái "xấu hơn" với một xác suất nhất định, xác suất này giảm dần theo thời gian (nhiệt độ). Giúp thoát khỏi các cực tiểu địa phương.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Có khả năng tìm ra lời giải tốt hơn Hill Climbing, hoàn chỉnh nếu nhiệt độ giảm đủ chậm.
+    * Nhược điểm: Cần tinh chỉnh các tham số (lịch trình giảm nhiệt độ), có thể chậm.
+
+#### e. Genetic Algorithm (Thuật toán di truyền)
+* **Mô tả ngắn gọn:** Mô phỏng quá trình tiến hóa tự nhiên, duy trì một quần thể các lời giải, áp dụng các toán tử lai ghép (crossover) và đột biến (mutation) để tạo ra các thế hệ mới.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Có khả năng tìm kiếm trong không gian lớn và phức tạp, thoát khỏi cực tiểu địa phương.
+    * Nhược điểm: Cần nhiều tham số để tinh chỉnh, có thể hội tụ chậm, không đảm bảo tìm ra lời giải tối ưu tuyệt đối.
+
+#### f. Beam Search (Tìm kiếm chùm)
+* **Mô tả ngắn gọn:** Biến thể của Best-First Search, chỉ giữ lại một số lượng giới hạn (beam width - độ rộng chùm) các trạng thái tốt nhất ở mỗi bước để mở rộng, nhằm giảm bộ nhớ.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Giảm đáng kể bộ nhớ so với Best-First Search toàn cục.
+    * Nhược điểm: Không hoàn chỉnh (có thể loại bỏ nhánh chứa lời giải tốt), không đảm bảo tối ưu.
+
+---
+
+### 2.4. Tìm kiếm trong môi trường phức tạp
+
+#### a. And-Or Search (Tìm kiếm Và-Hoặc)
+* **Mô tả ngắn gọn:** Dùng cho các bài toán có thể được phân rã thành các bài toán con (AND nodes - nút Và) hoặc có nhiều cách giải quyết khác nhau (OR nodes - nút Hoặc).
+* **Thành phần chính của bài toán:** Các nút AND (cần giải quyết tất cả các bài toán con) và nút OR (chỉ cần giải quyết một trong các bài toán con).
+* **Solution:** Một cây con lời giải, chứng minh rằng bài toán gốc có thể được giải quyết.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây, hoặc mô tả cách nó hoạt động với 8-puzzle nếu có cách tiếp cận cụ thể)
+    ```
+* **Nhận xét hiệu suất:**
+    * Trong ngữ cảnh 8-puzzle tiêu chuẩn, And-Or Search không phải là cách tiếp cận trực tiếp phổ biến. Nó phù hợp hơn cho các bài toán lập kế hoạch hoặc suy luận logic. Nếu bạn có một cách áp dụng cụ thể, hãy mô tả nó.
+
+---
+
+### 2.5. Tìm kiếm trong môi trường có ràng buộc (Constraint Satisfaction Problems - CSPs)
+
+* **Đặc điểm chung:** Tìm kiếm một trạng thái thỏa mãn một tập hợp các ràng buộc.
+* **Thành phần chính của bài toán:** Các biến, miền giá trị cho mỗi biến, và các ràng buộc giữa các biến.
+* **Solution:** Một phép gán giá trị cho tất cả các biến sao cho tất cả các ràng buộc đều được thỏa mãn.
+* *Lưu ý:* Bài toán 8-puzzle có thể được coi là một bài toán tìm đường đi, không phải là một CSP điển hình. Tuy nhiên, các kỹ thuật CSP có thể được điều chỉnh hoặc truyền cảm hứng cho các thuật toán tìm kiếm.
+
+#### a. Backtracking Search (Tìm kiếm quay lui)
+* **Mô tả ngắn gọn:** Xây dựng lời giải từng phần, nếu một lựa chọn dẫn đến vi phạm ràng buộc hoặc không thể hoàn thành lời giải, thuật toán sẽ quay lui và thử lựa chọn khác. Đây là một dạng của DFS.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Tương tự DFS về bộ nhớ.
+    * Nhược điểm: Có thể rất chậm nếu không có các heuristic hoặc kỹ thuật tối ưu hóa tốt.
+
+#### b. Forward Checking (Kiểm tra ràng buộc phía trước)
+* **Mô tả ngắn gọn:** Khi gán một giá trị cho một biến, thuật toán kiểm tra trước các ràng buộc liên quan đến các biến chưa được gán và loại bỏ các giá trị không tương thích khỏi miền của chúng. Giúp phát hiện bế tắc sớm hơn.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Thường hiệu quả hơn Backtracking đơn thuần bằng cách giảm không gian tìm kiếm.
+    * Nhược điểm: Chi phí kiểm tra phía trước có thể đáng kể.
+
+#### c. AC-3 (Arc Consistency Algorithm #3 - Thuật toán nhất quán cung AC-3)
+* **Mô tả ngắn gọn:** Một thuật toán tiền xử lý (hoặc dùng trong quá trình tìm kiếm) để loại bỏ các giá trị không nhất quán khỏi miền của các biến trong một CSP. Đảm bảo rằng với mỗi giá trị của một biến, tồn tại ít nhất một giá trị tương thích cho mỗi biến khác có ràng buộc với nó.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây - Lưu ý: AC-3 thường không trực tiếp giải 8-puzzle mà dùng để xử lý ràng buộc. Trong code của bạn, nó được dùng để tạo puzzle hợp lệ.)
+    ```
+* **Nhận xét hiệu suất:**
+    * AC-3 không phải là thuật toán tìm đường đi cho 8-puzzle. Trong project này, bạn đã sử dụng nó để tạo ra các trạng thái puzzle hợp lệ và có thể giải được. Điều này đảm bảo rằng các thuật toán tìm kiếm khác có một bài toán có ý nghĩa để giải.
+
+---
+
+### 2.6. Học máy (Machine Learning)
+
+#### a. Q-Learning (Học Q)
+* **Mô tả ngắn gọn:** Một thuật toán học tăng cường không cần mô hình (model-free). Tác tử học một hàm giá trị hành động (Q-value) cho mỗi cặp (trạng thái, hành động), cho biết "chất lượng" của việc thực hiện hành động đó tại trạng thái đó.
+* **Thành phần chính của bài toán:** Tác tử (Agent), môi trường (Environment), trạng thái (State), hành động (Action), phần thưởng (Reward), hàm Q (Q-function).
+* **Solution:** Một chính sách (policy) tối ưu, cho biết hành động tốt nhất cần thực hiện ở mỗi trạng thái để tối đa hóa tổng phần thưởng kỳ vọng.
+* **Hình ảnh GIF minh họa:**
+    ```
+    (Thêm hình ảnh GIF của bạn ở đây, minh họa quá trình học hoặc quá trình giải sau khi học)
+    ```
+* **Nhận xét hiệu suất:**
+    * Ưu điểm: Có thể học để giải các bài toán phức tạp mà không cần biết trước mô hình của môi trường.
+    * Nhược điểm: Cần nhiều lượt tương tác để học, việc thiết kế phần thưởng phù hợp là quan trọng, tốn nhiều thời gian và bộ nhớ để lưu trữ bảng Q_table cho các không gian trạng thái lớn.
+
+---
+
+### Hình ảnh so sánh hiệu suất của các thuật toán
+### Một vài nhận xét chung về hiệu suất các nhóm thuật toán
+
+* **Tìm kiếm không có thông tin:** Đảm bảo tính hoàn chỉnh và tối ưu (BFS, IDDFS, UCS) nhưng thường chậm và tốn bộ nhớ cho các bài toán phức tạp. DFS nhanh hơn về bộ nhớ nhưng không tối ưu.
+* **Tìm kiếm có thông tin:** Hiệu quả hơn nhiều nếu có heuristic tốt (A*, IDA*). Greedy nhanh nhưng không đảm bảo tối ưu.
+* **Tìm kiếm cục bộ:** Nhanh và ít tốn bộ nhớ, nhưng dễ bị mắc kẹt ở cực tiểu địa phương và không đảm bảo tìm ra lời giải (trừ Simulated Annealing và Genetic Algorithm có cơ chế thoát).
+* **Tìm kiếm với ràng buộc:** Backtracking và Forward Checking là các kỹ thuật tổng quát cho CSPs, có thể áp dụng nhưng cần điều chỉnh cho bài toán tìm đường đi.
+* **Học máy (Q-Learning):** Một cách tiếp cận khác, học từ kinh nghiệm, có thể mạnh mẽ nhưng đòi hỏi quá trình huấn luyện.
+
+## 3. KẾT LUẬN
+    * Đã triển khai thành công những thuật toán tìm kiếm khác nhau cho bài toán 8-puzzle.
+    * Xây dựng được giao diện người dùng cho phép người dùng tương tác và quan sát quá trình giải.
+    * Phân tích và so sánh cho thấy thuật toán một số thuật toán có vẻ hiệu quả nhất trong việc giải 8-puzzle.
+    * Rút ra những bài học từ những lần vấp ngã (thuật toán chạy không như ý muốn).
+    * Những điều học hỏi được qua dự án.
+
+## 4. HƯỚNG DẪN THỰC THI
+
+Để chạy chương trình và trải nghiệm trò chơi:
+
+1.  **Cách sử dụng giao diện:**
+    * Vào File "UI.py" để khởi chạy từ IDE mà bạn sử dụng.
+    * Các nút bấm chính: "NGẪU NHIÊN", "NHẬP TAY", "GIẢI", "XEM KẾT QUẢ", "LÙI", "RESET", "TIẾN".
+    * chọn thuật toán từ danh sách mà bạn muốn.
+    * Nhấn nút "CHẠY" để khởi chạy thuật toán.
+    * sau khi thuật toán đã chạy xong.
+    * Nhấn nút "RESET" để có thể chọn thuật toán khác để chạychạy
+    * Nhập puzzle bằng tay (nút NHẬP TAY).
+
+## 5. SINH VIÊN THỰC HIỆN
+
+* **Họ và tên:** Sử Thanh LộcLộc
+* **Mã số sinh viên:** [Mã số sinh viên của bạn]
+* **(Tùy chọn) Link GitHub (nếu có):** https://github.com/SuThanhLoc/BaiTapCaNhan_AI
