@@ -51,22 +51,32 @@ def BFS(start, goal):
     return None
 def Uniform_Cost_Search(start, goal):
     visited = set()
-    open = PriorityQueue()
-    open.put((0, start, [start]))
-    while open:
-        cost, current, path = open.get()
-        if str(current) not in visited:
-            visited.add(tuple(tuple(row) for row in current))
+    open_queue = PriorityQueue() # Đổi tên biến để tránh nhầm lẫn với hàm open() tích hợp
+    # Đưa vào một tuple: (cost, state, path)
+    open_queue.put((0, start, [start]))
+
+    while not open_queue.empty(): # Kiểm tra xem hàng đợi có rỗng không
+        cost, current, path = open_queue.get() # Lấy ra tuple
+
+        # Chuyển current (list of lists) thành tuple of tuples để thêm vào visited
+        current_tuple_form = tuple(tuple(row) for row in current)
+
+        if current_tuple_form not in visited: # So sánh với dạng tuple
+            visited.add(current_tuple_form)
+
             if current == goal:
                 return path
+
             X, Y = Find_Empty(current)
             for dx, dy in Moves:
                 new_x, new_y = X + dx, Y + dy
                 if Check(new_x, new_y):
                     new_state = Chinh_Sua_Ma_Tran(current, X, Y, new_x, new_y)
-                    tuple_state = tuple(tuple(row) for row in new_state)
-                    if tuple_state not in visited:
-                        open.put(cost + 1, new_state, path + [new_state])
+                    new_state_tuple_form = tuple(tuple(row) for row in new_state) # Chuyển sang dạng tuple
+
+                    if new_state_tuple_form not in visited:
+                        # Đưa vào một tuple: (new_cost, new_state, new_path)
+                        open_queue.put((cost + 1, new_state, path + [new_state]))
     return None
 def DFS(start, goal):
     visited = set()
