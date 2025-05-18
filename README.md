@@ -80,7 +80,7 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 * **Mô tả ngắn gọn:** Luôn chọn mở rộng nút có vẻ "gần" đích nhất theo hàm heuristic $h(n)$.
 * **Hình ảnh GIF minh họa:**
     ```
-    ![Hình ảnh GIF minh họa](Image/A_START.gif)
+    ![Hình ảnh GIF minh họa](image/A_START.gif)
     ```
 * **Nhận xét hiệu suất:**
     * Ưu điểm: Thường nhanh hơn các thuật toán không thông tin.
