@@ -199,12 +199,12 @@ Trong bài toán 8-puzzle, các thành phần chính của một bài toán tìm
 * **Học máy (Q-Learning):** Tiếp cận bằng cách học từ kinh nghiệm, có thể mạnh mẽ nhưng đòi hỏi quá trình huấn luyện, học tập dài.
 
 ## 3. KẾT LUẬN
-    * Đã triển khai thành công những thuật toán tìm kiếm khác nhau cho bài toán 8-puzzle.
-    * Xây dựng được giao diện người dùng cho phép người dùng tương tác và quan sát quá trình giải.
-    * Phân tích và so sánh cho thấy thuật toán một số thuật toán có vẻ hiệu quả hơn các thuật toán còn lại trong việc giải 8-puzzle.
-    * Hiểu xâu hơn về những thuật toán đã được cô giảng dạy.
-    * Học được cách làm việc với AI (có sử dụng một số AI để hỗ trợ, tham khảo để giải quyết bài toán (Gemini, ChatGPT).
-    * Rút ra những bài học từ những lần vấp ngã (thuật toán chạy không như ý muốn).
+* Đã triển khai thành công những thuật toán tìm kiếm khác nhau cho bài toán 8-puzzle.
+* Xây dựng được giao diện người dùng cho phép người dùng tương tác và quan sát quá trình giải.
+ * Phân tích và so sánh cho thấy thuật toán một số thuật toán có vẻ hiệu quả hơn các thuật toán còn lại trong việc giải 8-puzzle.
+ * Hiểu xâu hơn về những thuật toán đã được cô giảng dạy.
+ * Học được cách làm việc với AI (có sử dụng một số AI để hỗ trợ, tham khảo để giải quyết bài toán (Gemini, ChatGPT).
+ * Rút ra những bài học từ những lần vấp ngã (thuật toán chạy không như ý muốn).
 
 ## 4. HƯỚNG DẪN THỰC THI
 
